@@ -8,7 +8,7 @@ function AdminDashboard(props) {
   return (
     <>
     <div className='h-screen w-full p-10'>
-        <Header changeUser={props.changeUser} name="Akshdeep Singh" />
+        <Header changeUser={props.changeUser} headername={props.admindata.name} />
         <Createtask />
         <Alltask />
         <Credit panel="Admin Dashboard" />

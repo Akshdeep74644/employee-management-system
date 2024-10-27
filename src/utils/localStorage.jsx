@@ -123,7 +123,7 @@ const Employees = [
 const Manager = [
   {
     id: 1,
-    name: "Manager",
+    name: "Binod",
     email: "admin@123.com",
     password: "123",
   },

@@ -8,11 +8,9 @@ function App() {
 
   const [user, setUser] = useState(null)
   const [loggedInuserData, setLoggedInuserData] = useState(null)
-  const [userdata, setUserData] = useContext(AuthContext);
-  
+  const [userdata, setUserData, admindata, setAdmindata] = useContext(AuthContext);
    useEffect(() => {
      const loggedInUser = localStorage.getItem('loggedInUser')
-
      if(loggedInUser){
       const userData = JSON.parse(loggedInUser)
       setUser(userData.role)
@@ -24,11 +22,17 @@ function App() {
   
 
   const handleLogin = (email, password)=>{
-    if (email == "admin@123.com" && password == "123") {
-      console.log("welcom admin")
-      setUser('admin')
-      localStorage.setItem("loggedInUser", JSON.stringify({role: "admin"}))
-    }else if(userdata){
+    if (admindata) {
+      const admin = admindata.find((e)=>e.email == email && e.password == password)
+      if(admin){
+        console.log("welcom admin")
+        setUser('admin')
+        setLoggedInuserData(admin)
+        localStorage.setItem("loggedInUser", JSON.stringify({role: "admin", data:admin}))
+      }
+    }
+    
+    if(userdata){
       const employee = userdata.find((e)=>e.email == email && e.password == password)
       if(employee){
         console.log("welcom employee")
@@ -36,8 +40,6 @@ function App() {
         setLoggedInuserData(employee)
         localStorage.setItem("loggedInUser", JSON.stringify({role: "employee", data:employee}))
       }
-    }else{
-      alert("Invalid user!")
     }
   }
 
@@ -45,7 +47,7 @@ function App() {
   return (
     <>
     {!user ? <Login handlerlogin={handleLogin} />: ''}
-    {user == "admin" ?  <AdminDashboard changeUser={setUser} /> : (user == "employee"? <EmployeeDashboard changeUser={setUser} employeedata={loggedInuserData} />: null) } 
+    {user == "admin" ?  <AdminDashboard  changeUser={setUser} admindata={loggedInuserData} /> : (user == "employee"? <EmployeeDashboard changeUser={setUser} employeedata={loggedInuserData} />: null) } 
     </> 
   )
 }

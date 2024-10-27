@@ -8,7 +8,7 @@
    return (
      <>
      <div className='w-full h-screen p-10'>
-      <Header changeUser={props.changeUser} employeeHeaderData={props.employeedata} />
+      <Header changeUser={props.changeUser}  headername={props.employeedata.name} />
       <Taskstatus employeeTaskStatusData={props.employeedata} />
       <Tasklist employeeTaskListData={props.employeedata} />
       <Credit panel="Empolyee Dashboard" />
